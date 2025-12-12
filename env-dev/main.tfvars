@@ -38,12 +38,12 @@ app_component = {
     port = { ssh = 22, app = 8080 }
     max_size           = 10
     min_size           = 1
-  }/*
+  }
   cart = {
     port = { ssh = 22, app = 8080 }
     max_size           = 10
     min_size           = 1
-  }
+  }/*
   shipping = {
     port = { ssh = 22, app = 8080 }
     max_size           = 10
