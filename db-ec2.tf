@@ -16,7 +16,7 @@ resource "aws_route53_record" "Record_Launch" {
   zone_id = var.zone_id
   name    = "${each.key}-${var.env}"
   type    = "A"
-  ttl     = 50
+  ttl     = 30
   records = [aws_instance.instance_launch[each.key].private_ip]
 }
 

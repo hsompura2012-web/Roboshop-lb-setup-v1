@@ -29,12 +29,12 @@ app_component = {
     max_size           = 10
     min_size           = 1
      }
- /* catalogue = {
+  catalogue = {
     port = { ssh = 22, app = 8080 }
     max_size           = 10
     min_size           = 1
   }
-  user = {
+  /*user = {
     port = { ssh = 22, app = 8080 }
     max_size           = 10
     min_size           = 1
