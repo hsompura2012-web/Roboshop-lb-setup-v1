@@ -2,7 +2,7 @@ env="dev"
 ami = "ami-09c813fb71547fc4f"
 #
 zone_id =  "Z055196614WSVQYU4VYMA"
-instance_type = "t3.micro"
+instance_type = "t3.small"
 default_vpc_id = "vpc-096bed7d534ee6e34"
 
 subnets = ["subnet-04f731d9f5e3fd657","subnet-0ac38475a998558e7"]
