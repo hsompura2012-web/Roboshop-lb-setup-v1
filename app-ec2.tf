@@ -17,7 +17,7 @@ resource "aws_launch_template" "app" {
 resource "aws_lb_target_group" "app_tg" {
   for_each = var.app_component
   name     = "${each.key}-${var.env}"
-  port     = var.app_component["port"]["app"]
+  port     = var.app_component[each.key]["port"]["app"]
   protocol = "HTTP"
   vpc_id = var.default_vpc_id
 
@@ -57,7 +57,7 @@ resource "aws_lb" "app_lb" {
 resource "aws_lb_listener" "app_lb_listener" {
   for_each = var.app_component
   load_balancer_arn = aws_lb.app_lb[each.key].arn
-  port              = var.app_component["port"]["app"]
+  port              = var.app_component[each.key]["port"]["app"]
   protocol          = "HTTPS"
 
   default_action {
