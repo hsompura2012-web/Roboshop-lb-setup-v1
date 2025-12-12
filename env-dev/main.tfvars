@@ -49,9 +49,5 @@ app_component = {
     max_size           = 10
     min_size           = 1
   }
-  payment = {
-    port = { ssh = 22, app = 8080 }
-    max_size           = 10
-    min_size           = 1
+
   }
-}
