@@ -73,7 +73,7 @@ resource "aws_route53_record" "Record_DNS_Launch" {
   zone_id = var.zone_id
   name    = "${each.key}-${var.env}"
   type    = "CNAME"
-  ttl     = 50
+  ttl     = 30
   records = [aws_lb.app_lb[each.key].dns_name]
 }
 
