@@ -17,7 +17,7 @@ resource "aws_launch_template" "app" {
 resource "aws_lb_target_group" "app_tg" {
   for_each = var.app_component
   name     = "${each.key}-${var.env}"
-  port     = var.app_component[each.key]["port"]["app"]
+  port     = each.value["port"]["app"]
   protocol = "HTTP"
   vpc_id = var.default_vpc_id
 
@@ -28,6 +28,8 @@ resource "aws_lb_target_group" "app_tg" {
 
 resource "aws_autoscaling_group" "app_asg" {
   for_each = var.app_component
+
+  name               = "${each.key}-${var.env}"
   availability_zones = ["us-east-1a","us-east-1b"]
   desired_capacity   = each.value["min_size"]
   max_size           = each.value["max_size"]
@@ -37,7 +39,7 @@ resource "aws_autoscaling_group" "app_asg" {
     id      = aws_launch_template.app[each.key].id
     version = "$Latest"
   }
-
+  depends_on = [aws_route53_record.Record_DNS_Launch]
 
 }
 
@@ -57,7 +59,7 @@ resource "aws_lb" "app_lb" {
 resource "aws_lb_listener" "app_lb_listener" {
   for_each = var.app_component
   load_balancer_arn = aws_lb.app_lb[each.key].arn
-  port              = var.app_component[each.key]["port"]["app"]
+  port              = each.value["port"]["app"]
   protocol          = "HTTP"
 
   default_action {
