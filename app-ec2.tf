@@ -58,7 +58,7 @@ resource "aws_lb_listener" "app_lb_listener" {
   for_each = var.app_component
   load_balancer_arn = aws_lb.app_lb[each.key].arn
   port              = var.app_component[each.key]["port"]["app"]
-  protocol          = "HTTPS"
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"
