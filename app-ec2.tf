@@ -34,7 +34,7 @@ resource "aws_autoscaling_group" "app_asg" {
   min_size           = each.value["min_size"]
   target_group_arns = [aws_lb_target_group.app_tg[each.key].arn]
   launch_template {
-    id      = aws_launch_template.app.id
+    id      = aws_launch_template.app[each.key].id
     version = "$Latest"
   }
 }
@@ -54,13 +54,13 @@ resource "aws_lb" "app_lb" {
 
 resource "aws_lb_listener" "app_lb_listener" {
   for_each = var.app_component
-  load_balancer_arn = aws_lb.app_lb.arn
+  load_balancer_arn = aws_lb.app_lb[each.key].arn
   port              = var.app_component["ports"]["app"]
   protocol          = "HTTPS"
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.app_tg.arn
+    target_group_arn = aws_lb_target_group.app_tg[each.key].arn
   }
 }
 
