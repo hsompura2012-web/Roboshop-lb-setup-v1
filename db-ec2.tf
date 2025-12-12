@@ -1,7 +1,7 @@
 resource "aws_instance" "instance_launch" {
   for_each = var.db_component
   ami           = var.ami
-  instance_type = each.value["instance_type"]
+  instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.db_sg[each.key].id]
   user_data = templatefile("${path.module}/userdata.sh", {component = each.key, env = var.env } )
 
