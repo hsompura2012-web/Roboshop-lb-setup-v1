@@ -38,7 +38,7 @@ resource "aws_autoscaling_group" "app_asg" {
     version = "$Latest"
   }
 
-  depends_on = [aws_route53_record.Record_DNS_Launch]
+
 }
 
 
