@@ -39,41 +39,9 @@ resource "aws_autoscaling_group" "app_asg" {
     id      = aws_launch_template.app[each.key].id
     version = "$Latest"
   }
-  depends_on = [aws_route53_record.Record_DNS_Launch]
+  //depends_on = [aws_route53_record.Record_DNS_Launch]
 
 }
 
 
-resource "aws_lb" "app_lb" {
-  for_each = var.app_component
-  name               = "${each.key}-${var.env}"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.app_sg[each.key].id]
-  subnets            = var.subnets
-   tags = {
-     name            = "${each.key}-${var.env}"
-  }
-}
-
-resource "aws_lb_listener" "app_lb_listener" {
-  for_each = var.app_component
-  load_balancer_arn = aws_lb.app_lb[each.key].arn
-  port              = each.value["port"]["app"]
-  protocol          = "HTTP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app_tg[each.key].arn
-  }
-}
-
-resource "aws_route53_record" "Record_DNS_Launch" {
-  for_each =  var.app_component
-  zone_id = var.zone_id
-  name    = "${each.key}-${var.env}"
-  type    = "CNAME"
-  ttl     = 30
-  records = [aws_lb.app_lb[each.key].dns_name]
-}
 
