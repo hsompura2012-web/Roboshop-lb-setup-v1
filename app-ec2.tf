@@ -34,7 +34,7 @@ resource "aws_autoscaling_group" "app_asg" {
   desired_capacity   = each.value["min_size"]
   max_size           = each.value["max_size"]
   min_size           = each.value["min_size"]
-  target_group_arns = [aws_lb_target_group.app_tg[each.key].arn]
+  //target_group_arns = [aws_lb_target_group.app_tg[each.key].arn]
   launch_template {
     id      = aws_launch_template.app[each.key].id
     version = "$Latest"
